@@ -10,7 +10,7 @@
 
     <Button
             android:id="@+id/quizStartButton"
-            android:text="@string/quiz_start"
+            android:text="@string/quiz_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,7 @@
 package com.example.quiz
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,9 +15,6 @@ class QuizStartActivity : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
-
-
         return inflater.inflate(R.layout.activity_quiz_start, container, false)
     }
 
@@ -25,9 +23,11 @@ class QuizStartActivity : Fragment() {
         super.onStart()
 
         quizStartButton.setOnClickListener {
-            Toast.makeText(context, "クイズがまだ作成されていません", Toast.LENGTH_LONG).show()
-
+            val intent = Intent(context, QuizEdit::class.java)
+            startActivity(intent)
         }
     }
+
+
 
 }
