@@ -1,5 +1,6 @@
 package com.example.quiz
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_quiz_list.*
@@ -29,12 +31,23 @@ class QuizListActivity :  Fragment() {
 
         var dataArray = mutableListOf<String>()
 
-        for (title in quizModel) {
-            dataArray.add(title.quizTitle)
+        for (quiz in quizModel) {
+            dataArray.add(quiz.quizTitle)
 
         }
         val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, dataArray)
 
         quizArray.adapter = adapter
+
+
+        quizArray.setOnItemClickListener { parent, view, position, id ->
+
+
+            val intent: Intent = Intent(this.context, QuizEdit::class.java)
+            intent.putExtra("Quiz_Id", quizModel[id.toInt()]?.id?.toInt())
+            startActivity(intent)
+        }
+
+
     }
 }
