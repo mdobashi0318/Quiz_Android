@@ -23,7 +23,7 @@ class QuizStartActivity : Fragment() {
         super.onStart()
 
         quizStartButton.setOnClickListener {
-            val intent = Intent(context, QuizEdit::class.java)
+            val intent = Intent(this.context, QuizEdit::class.java)
             startActivity(intent)
         }
     }

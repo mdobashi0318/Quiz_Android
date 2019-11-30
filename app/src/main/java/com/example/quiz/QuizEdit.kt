@@ -3,6 +3,7 @@ package com.example.quiz
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.widget.Button
 import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmResults
@@ -23,6 +24,9 @@ class QuizEdit : AppCompatActivity() {
 
     /// クイズの新規追加時のID
     private val addQuizId: Int = 9999
+
+
+    private var mode: String? = null
 
 
 
@@ -88,6 +92,8 @@ class QuizEdit : AppCompatActivity() {
             if (quizId == addQuizId) {
                 /// 新規追加
                 addRealm()
+            } else if (mode == "Detail") {
+                /// 何もしない
             } else {
                 /// 編集
                 updateRealm()
@@ -146,6 +152,8 @@ class QuizEdit : AppCompatActivity() {
     private fun isEditQuiz() {
         quizId = intent.getIntExtra("Quiz_Id", addQuizId)
 
+        mode = intent.getStringExtra("Mode")
+
         if (quizId != addQuizId) {
             realm = Realm.getDefaultInstance()
             val quizModel: RealmResults<QuizModel> = realm.where(QuizModel::class.java).findAll()
@@ -158,6 +166,22 @@ class QuizEdit : AppCompatActivity() {
 
 
             editButton.text = "更新"
+        }
+
+
+        if (mode == "Detail") {
+            realm = Realm.getDefaultInstance()
+            val quizModel: RealmResults<QuizModel> = realm.where(QuizModel::class.java).findAll()
+
+            titleEditText.isEnabled = false
+            trueEditText.isEnabled = false
+            false1EditText.isEnabled = false
+            false2EditText.isEnabled = false
+            false3EditText.isEnabled = false
+            showSwitch.isEnabled = false
+
+
+            editButton.visibility = Button.INVISIBLE
         }
     }
 

@@ -45,7 +45,18 @@ class QuizListActivity :  Fragment() {
 
             val intent: Intent = Intent(this.context, QuizEdit::class.java)
             intent.putExtra("Quiz_Id", quizModel[id.toInt()]?.id?.toInt())
+            intent.putExtra("Mode", "Detail")
             startActivity(intent)
+        }
+
+
+        quizArray.setOnItemLongClickListener { parent, view, position, id ->
+            val intent: Intent = Intent(this.context, QuizEdit::class.java)
+            intent.putExtra("Quiz_Id", quizModel[id.toInt()]?.id?.toInt())
+            startActivity(intent)
+
+            return@setOnItemLongClickListener true
+
         }
 
 
