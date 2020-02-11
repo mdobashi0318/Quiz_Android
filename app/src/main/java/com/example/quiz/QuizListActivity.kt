@@ -60,5 +60,12 @@ class QuizListActivity :  Fragment() {
         }
 
 
+
+        fab.setOnClickListener {
+            val intent = Intent(this.context, QuizEdit::class.java)
+            startActivity(intent)
+        }
+
+
     }
 }

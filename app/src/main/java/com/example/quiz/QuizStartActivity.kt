@@ -22,9 +22,16 @@ class QuizStartActivity : Fragment() {
     override fun onStart() {
         super.onStart()
 
+
+
         quizStartButton.setOnClickListener {
-            val intent = Intent(this.context, QuizEdit::class.java)
-            startActivity(intent)
+
+            if (quizStartButton.text == "クイズ作成") {
+                val intent = Intent(this.context, QuizEdit::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(context,R.string.quiz_start,Toast.LENGTH_LONG).show()
+            }
         }
     }
 
