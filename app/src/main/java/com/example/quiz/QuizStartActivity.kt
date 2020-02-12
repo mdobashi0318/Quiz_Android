@@ -23,14 +23,21 @@ class QuizStartActivity : Fragment() {
         super.onStart()
 
 
+        val edit_quiz: String = getString(R.string.quiz_edit)
+        val start_quiz: String = getString(R.string.quiz_start)
+
+
+        quizStartButton.text = start_quiz
+
 
         quizStartButton.setOnClickListener {
 
-            if (quizStartButton.text == "クイズ作成") {
+            if (quizStartButton.text == edit_quiz) {
                 val intent = Intent(this.context, QuizEdit::class.java)
                 startActivity(intent)
             } else {
-                Toast.makeText(context,R.string.quiz_start,Toast.LENGTH_LONG).show()
+                val intent = Intent(this.context, QuizScreenActivity::class.java)
+                startActivity(intent)
             }
         }
     }
