@@ -1,6 +1,7 @@
 package com.example.quiz
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -13,8 +14,10 @@ class ResultScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result_screen)
 
 
-        animateTranslation(resultTextView)
 
+        val trueCount = intent.getIntExtra("trueCount", 0).toString()
+        resultTextView.text = trueCount + "門正解しました"
+        animateTranslation(resultTextView)
 
     }
 
@@ -24,6 +27,7 @@ class ResultScreenActivity : AppCompatActivity() {
         val objectAnimator = ObjectAnimator.ofFloat(textView, "translationY", 300f)
         objectAnimator.duration = 2000
         objectAnimator.start()
+
     }
 
 

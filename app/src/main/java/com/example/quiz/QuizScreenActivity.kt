@@ -3,11 +3,18 @@ package com.example.quiz
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_quiz_screen.*
 
 class QuizScreenActivity : AppCompatActivity() {
+
+    private var quizNum: Int = 0
+
+    private var trueCount: Int = 0
+
+    private lateinit var  quizModel: RealmResults<QuizModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +36,7 @@ class QuizScreenActivity : AppCompatActivity() {
 
         quizText.text = answers[0]
 
+
         val answerList = mutableListOf(answers[1], answers[2], answers[3], answers[4])
 
         for (i in 0 until buttons.count()) {
@@ -40,8 +48,18 @@ class QuizScreenActivity : AppCompatActivity() {
 
 
             buttons[i].setOnClickListener {
-                val intent = Intent(this.applicationContext, ResultScreenActivity::class.java)
-                startActivity(intent)
+
+                if (buttons[i].text == quizModel[i]?.trueAnswer) {
+                    tapTrueAnswer()
+                }
+
+                if (quizNum == 10 || quizNum == quizModel.count() - 1) {
+                    val intent = Intent(this.applicationContext, ResultScreenActivity::class.java)
+                    intent.putExtra("trueCount", trueCount)
+                    startActivity(intent)
+                } else {
+                    changeQuiz()
+                }
             }
         }
 
@@ -55,16 +73,32 @@ class QuizScreenActivity : AppCompatActivity() {
     private fun getQuiz(): MutableList<String?> {
         Realm.init(applicationContext)
         val realm = Realm.getDefaultInstance()
-        val quizModel: RealmResults<QuizModel> = realm.where(QuizModel::class.java).findAll()
+        quizModel = realm.where(QuizModel::class.java).findAll()
 
 
         return mutableListOf(
-            quizModel[0]?.quizTitle,
-            quizModel[0]?.trueAnswer,
-            quizModel[0]?.falseAnswer1,
-            quizModel[0]?.falseAnswer2,
-            quizModel[0]?.falseAnswer3
+            quizModel[quizNum]?.quizTitle,
+            quizModel[quizNum]?.trueAnswer,
+            quizModel[quizNum]?.falseAnswer1,
+            quizModel[quizNum]?.falseAnswer2,
+            quizModel[quizNum]?.falseAnswer3
         )
 
     }
+
+
+
+    private fun changeQuiz() {
+        quizNum++
+        setQuizText()
+    }
+
+
+
+    /// 正解だったらtrueCountにインクリメントする
+    private fun tapTrueAnswer() {
+        trueCount++
+    }
+
+
 }
