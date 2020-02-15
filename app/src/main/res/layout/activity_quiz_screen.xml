@@ -8,7 +8,7 @@
 
 
     <TextView
-            android:id="@+id/QuizText"
+            android:id="@+id/quizText"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="24dp"
@@ -30,7 +30,7 @@
             android:layout_marginLeft="68dp"
             android:layout_marginTop="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/QuizText" />
+            app:layout_constraintTop_toBottomOf="@+id/quizText" />
 
     <Button
             android:id="@+id/answer2"
@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.448"
             app:layout_constraintStart_toEndOf="@+id/answer1"
-            app:layout_constraintTop_toBottomOf="@+id/QuizText" />
+            app:layout_constraintTop_toBottomOf="@+id/quizText" />
 
     <Button
             android:id="@+id/answer3"
