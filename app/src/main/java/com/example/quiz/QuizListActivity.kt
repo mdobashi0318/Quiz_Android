@@ -40,7 +40,7 @@ class QuizListActivity :  Fragment() {
         quizArray.adapter = adapter
 
 
-        quizArray.setOnItemClickListener { parent, view, position, id ->
+        quizArray.setOnItemClickListener { _, _, _, id ->
 
 
             val intent: Intent = Intent(this.context, QuizEdit::class.java)
@@ -61,7 +61,7 @@ class QuizListActivity :  Fragment() {
 
 
 
-        fab.setOnClickListener {
+        fab.setOnSafeClickListener {
             val intent = Intent(this.context, QuizEdit::class.java)
             startActivity(intent)
         }

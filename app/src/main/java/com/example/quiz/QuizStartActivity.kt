@@ -44,7 +44,7 @@ class QuizStartActivity : Fragment() {
         }
 
 
-        quizStartButton.setOnClickListener {
+        quizStartButton.setOnSafeClickListener {
 
             if (quizStartButton.text == editQuiz) {
                 val intent = Intent(this.context, QuizEdit::class.java)
@@ -57,7 +57,7 @@ class QuizStartActivity : Fragment() {
 
 
 
-        historyButton.setOnClickListener {
+        historyButton.setOnSafeClickListener {
             Toast.makeText(this.context, "履歴を表示する", Toast.LENGTH_LONG).show()
         }
 

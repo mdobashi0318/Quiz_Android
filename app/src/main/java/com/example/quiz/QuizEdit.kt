@@ -48,21 +48,21 @@ class QuizEdit : AppCompatActivity() {
 
     /// 「登録/編集」ボタンのタップアクション
     private fun editButtonClickListener() {
-        editButton.setOnClickListener {
+        editButton.setOnSafeClickListener {
 
 
             if (titleEditText.text.toString() == "" || titleEditText.text.toString() == null) {
                 alert("タイトルが入力されていません") {
                     yesButton { return@yesButton }
                 }.show()
-                return@setOnClickListener
+                return@setOnSafeClickListener
             }
 
             if (trueEditText.text.toString() == "" || trueEditText.text.toString() == null) {
                 alert("正解が入力されていません") {
                     yesButton { return@yesButton }
                 }.show()
-                return@setOnClickListener
+                return@setOnSafeClickListener
             }
 
 
@@ -70,7 +70,7 @@ class QuizEdit : AppCompatActivity() {
                 alert("不正解が入力されていません") {
                     yesButton { return@yesButton }
                 }.show()
-                return@setOnClickListener
+                return@setOnSafeClickListener
             }
 
 
@@ -78,7 +78,7 @@ class QuizEdit : AppCompatActivity() {
                 alert("不正解が入力されていません") {
                     yesButton { return@yesButton }
                 }.show()
-                return@setOnClickListener
+                return@setOnSafeClickListener
             }
 
 
@@ -86,7 +86,7 @@ class QuizEdit : AppCompatActivity() {
                 alert("不正解が入力されていません") {
                     yesButton { return@yesButton }
                 }.show()
-                return@setOnClickListener
+                return@setOnSafeClickListener
             }
 
             if (quizId == addQuizId) {
