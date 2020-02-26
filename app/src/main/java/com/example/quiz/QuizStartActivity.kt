@@ -58,7 +58,8 @@ class QuizStartActivity : Fragment() {
 
 
         historyButton.setOnSafeClickListener {
-            Toast.makeText(this.context, "履歴を表示する", Toast.LENGTH_LONG).show()
+            val intent = Intent(this.context, HistoryActivity::class.java)
+            startActivity(intent)
         }
 
     }
