@@ -1,10 +1,9 @@
 package com.example.quiz
 
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.widget.Button
-import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_quiz_edit.*
@@ -40,6 +39,10 @@ class QuizEdit : AppCompatActivity() {
         isEditQuiz()
 
         editButtonClickListener()
+
+        delete.setOnSafeClickListener {
+            deleteRealm()
+        }
     }
 
 
@@ -110,13 +113,13 @@ class QuizEdit : AppCompatActivity() {
     private fun addRealm() {
         realm.executeTransaction {
             var id: Long = realm.where(QuizModel::class.java).count()
-            var quziModel = realm.createObject(QuizModel::class.java, id)
-            quziModel.quizTitle = titleEditText.text.toString()
-            quziModel.trueAnswer = trueEditText.text.toString()
-            quziModel.falseAnswer1 = false1EditText.text.toString()
-            quziModel.falseAnswer2 = false2EditText.text.toString()
-            quziModel.falseAnswer3 = false3EditText.text.toString()
-            quziModel.displayFlag = "0"
+            var quizModel = realm.createObject(QuizModel::class.java, id)
+            quizModel.quizTitle = titleEditText.text.toString()
+            quizModel.trueAnswer = trueEditText.text.toString()
+            quizModel.falseAnswer1 = false1EditText.text.toString()
+            quizModel.falseAnswer2 = false2EditText.text.toString()
+            quizModel.falseAnswer3 = false3EditText.text.toString()
+            quizModel.displayFlag = "0"
         }
 
 
@@ -129,17 +132,28 @@ class QuizEdit : AppCompatActivity() {
     /// クイズの更新
     private fun updateRealm() {
         realm.executeTransaction {
-            val quziModel = realm.where(QuizModel::class.java).equalTo("id", quizId).findFirst()
-            quziModel?.quizTitle = titleEditText.text.toString()
-            quziModel?.trueAnswer = trueEditText.text.toString()
-            quziModel?.falseAnswer1 = false1EditText.text.toString()
-            quziModel?.falseAnswer2 = false2EditText.text.toString()
-            quziModel?.falseAnswer3 = false3EditText.text.toString()
-            quziModel?.displayFlag = "0"
+            val quizModel = realm.where(QuizModel::class.java).equalTo("id", quizId).findFirst()
+            quizModel?.quizTitle = titleEditText.text.toString()
+            quizModel?.trueAnswer = trueEditText.text.toString()
+            quizModel?.falseAnswer1 = false1EditText.text.toString()
+            quizModel?.falseAnswer2 = false2EditText.text.toString()
+            quizModel?.falseAnswer3 = false3EditText.text.toString()
+            quizModel?.displayFlag = "0"
         }
 
         showAlert("クイズを更新しました")
 
+    }
+
+
+    /// クイズを削除
+    private fun deleteRealm() {
+        realm.executeTransaction {
+            val quizModel = realm.where(QuizModel::class.java).equalTo("id", quizId).findFirst()
+            quizModel?.deleteFromRealm()
+        }
+
+        showAlert("クイズを削除しました")
     }
 
 
@@ -151,25 +165,26 @@ class QuizEdit : AppCompatActivity() {
     /// 編集であればEditTextにテキストをセットし、ボタンのテキストに「編集」をセットする
     private fun isEditQuiz() {
         quizId = intent.getIntExtra("Quiz_Id", addQuizId)
+        delete.hide()
 
         mode = intent.getStringExtra("Mode")
 
         if (quizId != addQuizId) {
             realm = Realm.getDefaultInstance()
-            val quizModel: RealmResults<QuizModel> = realm.where(QuizModel::class.java).findAll()
+            val quizModel: QuizModel? = realm.where(QuizModel::class.java).equalTo("id", quizId).findFirst()
 
-            titleEditText.setText(quizModel[quizId!!]?.quizTitle.toString())
-            trueEditText.setText(quizModel[quizId!!]?.trueAnswer.toString())
-            false1EditText.setText(quizModel[quizId!!]?.falseAnswer1.toString())
-            false2EditText.setText(quizModel[quizId!!]?.falseAnswer2.toString())
-            false3EditText.setText(quizModel[quizId!!]?.falseAnswer3.toString())
+            titleEditText.setText(quizModel?.quizTitle.toString())
+            trueEditText.setText(quizModel?.trueAnswer.toString())
+            false1EditText.setText(quizModel?.falseAnswer1.toString())
+            false2EditText.setText(quizModel?.falseAnswer2.toString())
+            false3EditText.setText(quizModel?.falseAnswer3.toString())
 
 
-            editButton.text = "更新"
+
         }
 
 
-        if (mode == "Detail") {
+        if (mode == "Detail") {6
             realm = Realm.getDefaultInstance()
             val quizModel: RealmResults<QuizModel> = realm.where(QuizModel::class.java).findAll()
 
@@ -182,6 +197,7 @@ class QuizEdit : AppCompatActivity() {
 
 
             editButton.visibility = Button.INVISIBLE
+            delete.show()
         }
     }
 

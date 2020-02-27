@@ -51,6 +51,7 @@ class QuizScreenActivity : AppCompatActivity() {
 
                 if (buttons[i].text == quizModel[i]?.trueAnswer) {
                     tapTrueAnswer()
+                    quizNum = 0
                 }
 
                 if (quizNum == 10 || quizNum == quizModel.count() - 1) {
