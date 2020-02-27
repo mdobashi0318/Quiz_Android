@@ -184,7 +184,7 @@ class QuizEdit : AppCompatActivity() {
         }
 
 
-        if (mode == "Detail") {6
+        if (mode == "Detail") {
             realm = Realm.getDefaultInstance()
             val quizModel: RealmResults<QuizModel> = realm.where(QuizModel::class.java).findAll()
 
